@@ -47,6 +47,11 @@ class MWInterface(object):
                                                             title=page_title))
         return page.text()
 
+    def remove(self, page_title, reason='Nothing'):
+
+        page = self.site.Pages[page_title]
+        page.delete(reason=reason)
+
     def move(self, page_title, new_title):
 
         page = self.site.Pages[page_title]

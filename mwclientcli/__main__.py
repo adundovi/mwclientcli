@@ -8,7 +8,7 @@ def main(args=None):
     """Regular entry point
     """
     parser = argparse.ArgumentParser(
-        description='Interacts with a MediaWiki site.')
+        description='Interact with a MediaWiki site.')
     subparsers = parser.add_subparsers(title='commands',
                                        help='Choose between different commands',
                                        dest='command')

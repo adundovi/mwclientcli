@@ -39,12 +39,16 @@ class MWInterface(object):
         for i in self.site.allusers():
             self.output(i['name'])
 
+    def get_url(self, page_title='Main_Page'):
+        return '{scheme}://{host}/wiki/{title}'.format(scheme='https',
+                                                       host=self.site.host,
+                                                       title=page_title)
+
     def get_page(self, page_title='Main_Page'):
         
         page = self.site.Pages[page_title]
-        self.output('{scheme}://{host}/wiki/{title}'.format(scheme='https',
-                                                            host=self.site.host,
-                                                            title=page_title))
+        self.output(get_url(page_title))
+
         return page.text()
 
     def remove(self, page_title, reason='Nothing'):
@@ -56,6 +60,15 @@ class MWInterface(object):
 
         page = self.site.Pages[page_title]
         page.move(new_title)
+
+    def list_files(self):
+
+        for i in self.site.allimages():
+            self.output(i.name)
+
+    def upload(self, file, description):
+
+        self.site.upload(open(file), file, description)
 
     #def parse( self, page_title ):
     #

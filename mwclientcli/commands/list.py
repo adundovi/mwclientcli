@@ -13,7 +13,8 @@ class List(Command):
 
         self.parser.add_argument('item', nargs='?',
                                  default='pages',
-                                 choices=['pages', 'categories', 'namespaces', 'users'],
+                                 choices=['pages', 'categories', 'namespaces',
+                                          'users', 'files'],
                                  help='List specified class of objects')
         self.parser.add_argument('-n', '--namespace',
                                  default='0',
@@ -34,3 +35,6 @@ class List(Command):
 
         if self.args.item == 'users':
             self.site.print_all_users()
+
+        if self.args.item == 'files':
+            self.site.list_files()

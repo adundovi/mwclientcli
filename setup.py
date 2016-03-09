@@ -10,7 +10,7 @@ setup(name="mwclientcli",
       url="",
       keywords="mediawiki mwclient",
       packages=find_packages(),
-      install_requires=["mwclient>=0.8.1", "BeautifulSoup4>=4.4.1", "lxml>=3.5.0"],
+      install_requires=["mwclient>=0.8.1"],
       entry_points={
           'console_scripts': [
               'wiki = mwclientcli.__main__:main'

@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 import tempfile
 
 from mwclientcli.libs.command import Command
@@ -24,13 +25,26 @@ class Edit(Command):
 
     def process(self):
 
-        initial_content = self.site.get_page(self.args.title).encode('utf8')
+        if sys.stdin.isatty():
+            # when there is no piped stream
+            initial_content = self.site.get_page(self.args.title).encode('utf8')
+            self._runeditor(initial_content)
+            return
+
+        # handle piped stream
+        buffer = []
+        for line in sys.stdin:
+            buffer.append(line)
+        initial_content = "".join(buffer)
+        self.site.set_page(self.args.title, initial_content)
+
+    def _runeditor(self, initial_content):
 
         with tempfile.NamedTemporaryFile(suffix=".tmp") as temp:
 
             temp.write(initial_content)
             temp.flush()
-            subprocess.call([EDITOR, temp.name])
+            subprocess.call([EDITOR, temp.name], stdin=None)
             temp.seek(0)
             new_content = temp.read()
 

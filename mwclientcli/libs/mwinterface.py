@@ -47,7 +47,7 @@ class MWInterface(object):
     def get_page(self, page_title='Main_Page'):
         
         page = self.site.Pages[page_title]
-        self.output(get_url(page_title))
+        self.output(self.get_url(page_title))
 
         return page.text()
 
